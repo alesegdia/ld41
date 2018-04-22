@@ -5,8 +5,10 @@
 
 #include <aether/graphics/graphics.h>
 
+#include "../constants.h"
 #include "gameobject.h"
 #include "../explosioncaster.h"
+#include "../assets.h"
 
 class Stage
 {
@@ -18,17 +20,7 @@ public:
     void add( GameObject::Ptr go );
     void reset();
 
-    void killAll()
-    {
-        for( auto go : m_gameObjects )
-        {
-            if( go->type == Type::Ship && go->faction == Faction::Enemy )
-            {
-                go->dead = true;
-                spawn_explosion(go->rect.x(), go->rect.y());
-            }
-        }
-    }
+    void killAll();
 
     Element getPlayerElement();
 
@@ -42,3 +34,5 @@ private:
 
 
 };
+
+void stage_set_assets(Assets* a);

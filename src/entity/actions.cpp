@@ -15,9 +15,9 @@ int get_gauge()
 void inc_gauge()
 {
     player_gauge++;
-    if( player_gauge > 5 )
+    if( player_gauge > Constants::MAX_GAUGE )
     {
-        player_gauge = 5;
+        player_gauge = Constants::MAX_GAUGE;
     }
 }
 

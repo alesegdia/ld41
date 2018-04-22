@@ -5,6 +5,7 @@
 #include "actions.h"
 #include "../explosioncaster.h"
 
+
 Stage::~Stage()
 {
     for( auto go : m_gameObjects )
@@ -75,8 +76,8 @@ void Stage::render()
             case Element::Plant:    c.r = 64;   c.g = 255;  c.b = 64;   break;
             case Element::Water:    c.r = 64;   c.g = 64;   c.b = 255;  break;
             }
-
-            aether::math::Rectf r(go->rect.x(), go->rect.y(), 16*go->health, 5);
+            int prcnt = go->health * 60 / Constants::ENEMY_HP;
+            aether::math::Rectf r(go->rect.x(), go->rect.y(), prcnt, 5);
             aether::graphics::draw_filled_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), c);
         }
     }
@@ -95,6 +96,18 @@ void Stage::reset()
     }
 }
 
+void Stage::killAll()
+{
+    for( auto go : m_gameObjects )
+    {
+        if( go->type == Type::Ship && go->faction == Faction::Enemy )
+        {
+            go->dead = true;
+            spawn_explosion(go->rect.x(), go->rect.y());
+        }
+    }
+}
+
 Element Stage::getPlayerElement()
 {
     return m_playerElement;
@@ -102,6 +115,12 @@ Element Stage::getPlayerElement()
 
 typedef void (*CollisionCallback)(GameObject::Ptr a, GameObject::Ptr b);
 
+static Assets* assets;
+
+void stage_set_assets(Assets* a)
+{
+    assets = a;
+}
 
 void handle_ship_bullet_collision(GameObject::Ptr ship, GameObject::Ptr bullet)
 {
@@ -110,13 +129,15 @@ void handle_ship_bullet_collision(GameObject::Ptr ship, GameObject::Ptr bullet)
     {
     case Effectiveness::Neutral:
         ship->health -= 1;
+        assets->hurt.play();
         break;
     case Effectiveness::Strong:
         ship->dead = true;
         break;
     case Effectiveness::Weak:
-        ship->health = 5;
+        ship->health = Constants::ENEMY_HP;
         new_player_element = ship->element;
+        assets->heal.play();
         break;
     }
     if( ship->isDead() )
@@ -155,19 +176,5 @@ void Stage::handleCollision(GameObject::Ptr a, GameObject::Ptr b)
 
 bool Stage::collide(GameObject::Ptr a, GameObject::Ptr b)
 {
-    if( a->faction != b->faction )
-    {
-        if( aether::math::intersect(a->rect, b->rect) )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else
-    {
-        return false;
-    }
+    return a->faction != b->faction && aether::math::intersect(a->rect, b->rect);
 }

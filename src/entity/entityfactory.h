@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include "../constants.h"
 #include "../assets.h"
 #include "gameobject.h"
 #include "stage.h"
@@ -32,10 +33,10 @@ public:
             Faction::Enemy, (Element)element, Type::Ship,
             tex, x, y
         );
-        go->base_speed.x(30);
+        go->base_speed.x(Constants::ENEMY_SPEED);
         go->input_axis.x(-1);
         go->step = &sys_move;
-        go->health = 4;
+        go->health = Constants::ENEMY_HP;
         return go;
     }
 
@@ -51,7 +52,7 @@ public:
         }
         GameObject::Ptr go = makeGameObject(
             Faction::Player, e, Type::Bullet,
-            tex, x, y, 1000, 0, 1, 0
+            tex, x, y, Constants::BULLET_SPEED, 0, 1, 0
         );
         go->step = &sys_move;
         return go;
@@ -61,7 +62,7 @@ public:
     {
         GameObject::Ptr go = makeGameObject(
             Faction::Player, Element::Plant, Type::Ship,
-            m_assets.drake_green, x, y, 400, 200
+            m_assets.drake_green, x, y, Constants::PLAYER_X_SPEED, Constants::PLAYER_Y_SPEED
         );
         go->step = &player_step;
         return go;

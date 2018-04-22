@@ -2,6 +2,8 @@
 
 #include <aether/graphics/texture.h>
 #include <aether/graphics/font.h>
+#include <aether/audio/stream.h>
+#include <aether/audio/sample.h>
 
 class Assets
 {
@@ -25,6 +27,13 @@ public:
         star_blue.load("media/star_blue.png");
 
         font.load("media/perfectdos.ttf", 20);
+
+        theme.load("media/drake_theme.ogg");
+
+        explosion.load("media/explosion.wav");
+        shoot.load("media/shoot.wav");
+        hurt.load("media/hurt.wav");
+        heal.load("media/heal.wav");
     }
 
 
@@ -47,6 +56,13 @@ public:
         star_red.destroy();
 
         font.destroy();
+
+        theme.destroy();
+
+        shoot.destroy();
+        explosion.destroy();
+        hurt.destroy();
+        heal.destroy();
     }
 
 
@@ -68,5 +84,11 @@ public:
 
     aether::graphics::Font font;
 
+    aether::audio::Stream theme;
+
+    aether::audio::Sample shoot;
+    aether::audio::Sample explosion;
+    aether::audio::Sample hurt;
+    aether::audio::Sample heal;
 
 };

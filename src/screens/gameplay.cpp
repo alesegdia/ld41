@@ -3,6 +3,7 @@
 #include "../ld41.h"
 
 #include "../explosioncaster.h"
+#include "../constants.h"
 
 GameplayScreen::GameplayScreen(LD41 *game)
     : m_factory(game->assets, m_stage),
@@ -14,10 +15,12 @@ GameplayScreen::GameplayScreen(LD41 *game)
 
 void GameplayScreen::show()
 {
+    Constants::Level1();
     actions_init(&(m_game->assets), &m_factory);
     m_stage.reset();
     m_player = m_factory.makePlayer(10,10);
-    m_sequence.reset(5);
+    m_sequence.reset(Constants::INITIAL_STARS);
+    stage_set_assets(&(m_game->assets));
 }
 
 void GameplayScreen::hide()
@@ -37,7 +40,7 @@ void GameplayScreen::render()
     m_game->assets.font.print("NEXT", 15, 20, aether::graphics::Color(255, 255, 255));
     m_sequence.render(70,10);
     aether::graphics::Color c;
-    if( get_gauge() == 5 )
+    if( get_gauge() == Constants::MAX_GAUGE )
     {
         c.r = rand() % 255;
         c.g = rand() % 255;
@@ -50,7 +53,7 @@ void GameplayScreen::render()
         m_game->assets.font.print("DEFEND THE PLANET!!", 550, 550, aether::graphics::Color(255, 255, 255));
     }
 
-    aether::graphics::draw_filled_rectangle(0, 580, (get_gauge()) * 800 / 5, 600, c);
+    aether::graphics::draw_filled_rectangle(0, 580, (get_gauge()) * 800 / Constants::MAX_GAUGE, 600, c);
 
     if( m_flashBang > 0 )
     {
@@ -112,17 +115,18 @@ void GameplayScreen::update(uint64_t delta)
         if( m_nextShot <= 0 )
         {
             m_factory.makeBullet(
-                        m_player->rect.x(),
-                        m_player->rect.y(),
+                        m_player->rect.x() + 60,
+                        m_player->rect.y() + 5,
                         m_player->element);
-            m_nextShot = 2500000;
+            m_nextShot = Constants::SHOOT_RATE;
+            m_game->assets.shoot.play(1);
         }
     }
 
     if( m_nextWave <= 0 )
     {
         wave();
-        m_nextWave = 4 * 10e6;
+        m_nextWave = Constants::WAVE_RATE;
     }
 
     if( m_nextShot > 0 ) m_nextShot -= delta;
@@ -147,9 +151,14 @@ void GameplayScreen::update(uint64_t delta)
         }
     }
 
+    if( get_enemy_killed().size() > 0 )
+    {
+        m_game->assets.explosion.play(1);
+    }
+
     get_enemy_killed().clear();
 
-    if( get_gauge() == 5 && aether::core::is_key_down(aether::core::KeyCode::Z) )
+    if( get_gauge() == Constants::MAX_GAUGE && aether::core::is_key_down(aether::core::KeyCode::Z) )
     {
         reset_gauge();
         m_stage.killAll();
