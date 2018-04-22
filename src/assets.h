@@ -1,6 +1,7 @@
 #pragma once
 
 #include <aether/graphics/texture.h>
+#include <aether/graphics/font.h>
 
 class Assets
 {
@@ -18,7 +19,14 @@ public:
         bullet_red.load("media/bullet_red.png");
         bullet_green.load("media/bullet_green.png");
         bullet_blue.load("media/bullet_blue.png");
+
+        star_red.load("media/star_red.png");
+        star_green.load("media/star_green.png");
+        star_blue.load("media/star_blue.png");
+
+        font.load("media/perfectdos.ttf", 20);
     }
+
 
     void cleanup()
     {
@@ -33,7 +41,14 @@ public:
         bullet_blue.destroy();
         bullet_green.destroy();
         bullet_red.destroy();
+
+        star_blue.destroy();
+        star_green.destroy();
+        star_red.destroy();
+
+        font.destroy();
     }
+
 
     aether::graphics::Texture drake_blue;
     aether::graphics::Texture drake_green;
@@ -46,5 +61,12 @@ public:
     aether::graphics::Texture bullet_green;
     aether::graphics::Texture bullet_blue;
     aether::graphics::Texture bullet_red;
+
+    aether::graphics::Texture star_green;
+    aether::graphics::Texture star_blue;
+    aether::graphics::Texture star_red;
+
+    aether::graphics::Font font;
+
 
 };

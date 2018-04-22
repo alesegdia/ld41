@@ -32,9 +32,10 @@ public:
             Faction::Enemy, (Element)element, Type::Ship,
             tex, x, y
         );
-        go->base_speed.x(10);
-        go->input_axis.x(-10);
+        go->base_speed.x(30);
+        go->input_axis.x(-1);
         go->step = &sys_move;
+        go->health = 4;
     }
 
     GameObject::Ptr makeBullet(float x, float y, Element e)
@@ -49,7 +50,7 @@ public:
         }
         GameObject::Ptr go = makeGameObject(
             Faction::Player, e, Type::Bullet,
-            tex, x, y, 200, 0, 1, 0
+            tex, x, y, 1000, 0, 1, 0
         );
         go->step = &sys_move;
         return go;
@@ -59,7 +60,7 @@ public:
     {
         GameObject::Ptr go = makeGameObject(
             Faction::Player, Element::Plant, Type::Ship,
-            m_assets.drake_green, x, y, 100, 50
+            m_assets.drake_green, x, y, 400, 200
         );
         go->step = &player_step;
     }

@@ -2,6 +2,9 @@
 
 #include <algorithm>
 
+#include "actions.h"
+#include "../explosioncaster.h"
+
 Stage::~Stage()
 {
     for( auto go : m_gameObjects )
@@ -61,8 +64,21 @@ void Stage::render()
     {
         auto r = go->rect;
         go->texture.draw(r.x(), r.y());
-        aether::graphics::Color c(255, 0, 0);
-        aether::graphics::draw_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), c);
+        //aether::graphics::Color c(255, 0, 0);
+        //aether::graphics::draw_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), c);
+        if( go->faction == Faction::Enemy )
+        {
+            aether::graphics::Color c;
+            switch(go->element)
+            {
+            case Element::Fire:     c.r = 255;  c.g = 64;   c.b = 64;   break;
+            case Element::Plant:    c.r = 64;   c.g = 255;  c.b = 64;   break;
+            case Element::Water:    c.r = 64;   c.g = 64;   c.b = 255;  break;
+            }
+
+            aether::math::Rectf r(go->rect.x(), go->rect.y(), 16*go->health, 5);
+            aether::graphics::draw_filled_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), c);
+        }
     }
 }
 
@@ -102,6 +118,12 @@ void handle_ship_bullet_collision(GameObject::Ptr ship, GameObject::Ptr bullet)
         ship->health = 5;
         new_player_element = ship->element;
         break;
+    }
+    if( ship->isDead() )
+    {
+        get_enemy_killed().push_back(ship->element);
+        inc_gauge();
+        spawn_explosion(ship->rect.x(), ship->rect.y());
     }
 }
 

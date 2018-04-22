@@ -5,6 +5,27 @@
 static Assets* assets;
 static EntityFactory* factory;
 
+static int player_gauge = 0;
+
+int get_gauge()
+{
+    return player_gauge;
+}
+
+void inc_gauge()
+{
+    player_gauge++;
+    if( player_gauge > 5 )
+    {
+        player_gauge = 5;
+    }
+}
+
+void reset_gauge()
+{
+    player_gauge = 0;
+}
+
 void player_change_element(GameObject::Ptr go, Element new_element)
 {
     assert(go->faction == Faction::Player);
@@ -33,6 +54,25 @@ void sys_move(GameObject::Ptr go, uint64_t delta)
     if( go->rect.x() < -100 || go->rect.x() > 1200 )
     {
         go->dead = true;
+        if( go->type == Type::Ship ) get_enemy_dead().push_back(go->element);
+    }
+
+    if( go->faction == Faction::Player && go->type == Type::Ship )
+    {
+        if( go->rect.x() < 0 )
+        {
+            go->rect.x(0);
+        }
+
+        if( go->rect.y() > 500 )
+        {
+            go->rect.y(500);
+        }
+
+        if( go->rect.y() < 60 )
+        {
+            go->rect.y(60);
+        }
     }
 }
 
@@ -58,6 +98,7 @@ void sys_move_keyboard(GameObject::Ptr go, uint64_t delta)
     {
         input.y(1);
     }
+
 }
 
 void player_step(GameObject::Ptr go, uint64_t delta)
@@ -66,3 +107,15 @@ void player_step(GameObject::Ptr go, uint64_t delta)
     sys_move(go, delta);
 }
 
+static std::vector<Element> enemy_dead;
+std::vector<Element>& get_enemy_dead()
+{
+    return enemy_dead;
+}
+
+
+static std::vector<Element> enemy_killed;
+std::vector<Element>& get_enemy_killed()
+{
+    return enemy_killed;
+}
