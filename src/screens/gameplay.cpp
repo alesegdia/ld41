@@ -15,7 +15,7 @@ GameplayScreen::GameplayScreen(LD41 *game)
 
 void GameplayScreen::show()
 {
-    Constants::Level1();
+    Constants::ConfigLevel(m_game->level);
     actions_init(&(m_game->assets), &m_factory);
     m_stage.reset();
     m_player = m_factory.makePlayer(10,10);
@@ -91,6 +91,20 @@ void GameplayScreen::render()
 
 void GameplayScreen::update(uint64_t delta)
 {
+    MidstageScreen* stg = &(m_game->midstageScreen);
+
+    if( m_sequence.size() == 0 )
+    {
+        m_game->level++;
+        stg->state = 2;
+        m_game->setScreen(&(m_game->midstageScreen));
+    }
+
+    if( m_sequence.size() == 17 )
+    {
+        stg->state = 1;
+        m_game->setScreen(stg);
+    }
 
     m_starfield.update();
 
@@ -110,7 +124,7 @@ void GameplayScreen::update(uint64_t delta)
         m_stage.update(delta);
     }
 
-    if( aether::core::is_key_down( aether::core::KeyCode::X ) )
+    if( aether::core::is_key_just_pressed( aether::core::KeyCode::X ) )
     {
         if( m_nextShot <= 0 )
         {
@@ -162,7 +176,8 @@ void GameplayScreen::update(uint64_t delta)
     {
         reset_gauge();
         m_stage.killAll();
-        m_flashBang = 10e6;
+        m_flashBang = 2 * 10e6;
+        m_game->assets.overload.play();
     }
 
     update_caster(delta);

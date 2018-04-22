@@ -1,6 +1,8 @@
 #include <aether/core/application.h>
 
 #include "screens/gameplay.h"
+#include "screens/menu.h"
+#include "screens/midstage.h"
 #include "assets.h"
 #include "entity/actions.h"
 
@@ -16,7 +18,11 @@ public:
     void dispose();
 
     GameplayScreen gameplayScreen;
+    MenuScreen menuScreen;
+    MidstageScreen midstageScreen;
 
     Assets assets;
+
+    int level = 1;
 };
 

@@ -8,10 +8,7 @@
 
 Stage::~Stage()
 {
-    for( auto go : m_gameObjects )
-    {
-        delete go;
-    }
+    reset();
 }
 
 Element new_player_element = Element::Water;
@@ -94,6 +91,7 @@ void Stage::reset()
     {
         delete go;
     }
+    m_gameObjects.clear();
 }
 
 void Stage::killAll()

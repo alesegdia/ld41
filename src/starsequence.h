@@ -16,6 +16,11 @@ public:
 
     }
 
+    int size()
+    {
+        return m_sequence.size();
+    }
+
     void reset(int n)
     {
         m_sequence.clear();
@@ -49,7 +54,7 @@ public:
             case Element::Fire: texture = m_assets.star_red; break;
             default: assert(false); break;
             }
-            texture.draw(x + i * 20, y);
+            texture.draw(x + i * 40, y);
             i++;
         }
     }

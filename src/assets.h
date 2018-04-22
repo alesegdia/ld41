@@ -27,6 +27,8 @@ public:
         star_blue.load("media/star_blue.png");
 
         font.load("media/perfectdos.ttf", 20);
+        fontMid.load("media/perfectdos.ttf", 40);
+        fontBig.load("media/perfectdos.ttf", 120);
 
         theme.load("media/drake_theme.ogg");
 
@@ -34,6 +36,7 @@ public:
         shoot.load("media/shoot.wav");
         hurt.load("media/hurt.wav");
         heal.load("media/heal.wav");
+        overload.load("media/overload.wav");
     }
 
 
@@ -56,6 +59,8 @@ public:
         star_red.destroy();
 
         font.destroy();
+        fontMid.destroy();
+        fontBig.destroy();
 
         theme.destroy();
 
@@ -63,6 +68,7 @@ public:
         explosion.destroy();
         hurt.destroy();
         heal.destroy();
+        overload.destroy();
     }
 
 
@@ -83,6 +89,8 @@ public:
     aether::graphics::Texture star_red;
 
     aether::graphics::Font font;
+    aether::graphics::Font fontMid;
+    aether::graphics::Font fontBig;
 
     aether::audio::Stream theme;
 
@@ -90,5 +98,6 @@ public:
     aether::audio::Sample explosion;
     aether::audio::Sample hurt;
     aether::audio::Sample heal;
+    aether::audio::Sample overload;
 
 };

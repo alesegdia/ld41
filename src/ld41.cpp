@@ -3,7 +3,9 @@
 
 LD41::LD41(int w, int h)
     : aether::core::Application(w, h),
-      gameplayScreen(this)
+      gameplayScreen(this),
+      menuScreen(this),
+      midstageScreen(this)
 {
 
 }
@@ -12,7 +14,7 @@ int LD41::ready(int argc, char **argv)
 {
     assets.load();
     assets.theme.play();
-    setScreen(&gameplayScreen);
+    setScreen(&menuScreen);
     return 0;
 }
 
