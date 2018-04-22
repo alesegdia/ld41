@@ -36,6 +36,7 @@ public:
         go->input_axis.x(-1);
         go->step = &sys_move;
         go->health = 4;
+        return go;
     }
 
     GameObject::Ptr makeBullet(float x, float y, Element e)
@@ -63,6 +64,7 @@ public:
             m_assets.drake_green, x, y, 400, 200
         );
         go->step = &player_step;
+        return go;
     }
 
     GameObject::Ptr makeGameObject (
