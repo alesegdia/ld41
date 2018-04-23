@@ -20,3 +20,9 @@ void spawn_explosion(float x, float y)
 {
     return caster.cast(x, y);
 }
+
+
+void cast_debris(float x, float y)
+{
+    caster.cast_debris(x, y);
+}

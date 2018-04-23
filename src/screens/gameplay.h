@@ -30,6 +30,8 @@ private:
         }
     }
 
+    float m_nextDebris = 0;
+    float m_nextStoreBuff = 0;
     LD41* m_game;
     Stage m_stage;
     EntityFactory m_factory;
@@ -39,6 +41,7 @@ private:
     int m_flashBang = 0;
     StarSequence m_sequence;
     Starfield m_starfield;
+    float m_planetPos = 0;
 
 
 };

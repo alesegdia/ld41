@@ -5,6 +5,7 @@
 #include <aether/graphics/graphics.h>
 
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 
@@ -36,16 +37,18 @@ struct Debris
 {
     int size = 10;
     float x, y;
+    int speed = 30;
     Debris(int s, float xx, float yy)
     {
         size = s;
-        x = xx + rand() % 80;
-        y = yy + rand() % 80;
-    }
+        x = xx;
+        y = yy;
+        speed = 10 + rand() % 30;
+    };
 
     void update()
     {
-        x -= 30;
+        x -= speed;
     }
 
     void render()
@@ -70,7 +73,7 @@ public:
             int ret = e.update(d);
             if( ret != 0 )
             {
-                m_debris.push_back(Debris(ret, e.x, e.y));
+                m_debris.push_back(Debris(ret, e.x + rand() % 80, e.y + rand() % 80));
             }
             if( e.numExplosions > 0 )
             {
@@ -83,19 +86,17 @@ public:
             m_explosions.clear();
         }
 
-        clear = true;
-        for( auto& e : m_debris )
+        for( auto it = m_debris.begin(); it != m_debris.end(); )
         {
-            e.update();
-            if( e.x > 0 )
+            (*it).update();
+            if( (*it).x < 0 )
             {
-                clear = false;
+                it = m_debris.erase(it);
             }
-        }
-
-        if( clear )
-        {
-            m_debris.clear();
+            else
+            {
+                it++;
+            }
         }
 
     }
@@ -106,6 +107,13 @@ public:
         {
             e.render();
         }
+    }
+
+    void cast_debris(float x, float y)
+    {
+        m_debris.push_back(Debris(
+                               5 + rand()%10,
+                               x, y));
     }
 
 private:
@@ -119,5 +127,7 @@ void update_caster(uint64_t delta);
 void render_caster();
 
 void spawn_explosion(float x, float y);
+
+void cast_debris(float x, float y);
 
 

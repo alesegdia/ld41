@@ -1,5 +1,6 @@
 #include "gameplay.h"
 
+#include <aether/math/vec.h>
 #include "../ld41.h"
 
 #include "../explosioncaster.h"
@@ -21,6 +22,7 @@ void GameplayScreen::show()
     m_player = m_factory.makePlayer(10,10);
     m_sequence.reset(Constants::INITIAL_STARS);
     stage_set_assets(&(m_game->assets));
+    m_planetPos = 0;
 }
 
 void GameplayScreen::hide()
@@ -31,6 +33,7 @@ void GameplayScreen::hide()
 void GameplayScreen::render()
 {
     aether::graphics::clear(32, 0, 32);
+    m_game->assets.planet.draw(m_planetPos+400, 0);
     m_starfield.render();
     m_stage.render();
 
@@ -93,6 +96,29 @@ void GameplayScreen::update(uint64_t delta)
 {
     MidstageScreen* stg = &(m_game->midstageScreen);
 
+    if( m_nextStoreBuff <= 0 )
+    {
+        m_player->pos_buffer.push_back(
+                    aether::math::Vec2f(m_player->rect.x(), m_player->rect.y()));
+        while(m_player->pos_buffer.size() > 10 )
+        {
+            m_player->pos_buffer.pop_front();
+        }
+        m_nextStoreBuff = 1e6;
+    }
+    m_nextStoreBuff -= delta;
+
+    if( m_nextDebris <= 0 )
+    {
+        cast_debris(m_player->rect.x()+30, m_player->rect.y() + rand()%30);
+        m_nextDebris = 10000;
+        fflush(stdout);
+    }
+
+    m_nextDebris -= delta;
+
+    m_planetPos -= delta / 1e6;
+
     if( m_sequence.size() == 0 )
     {
         m_game->level++;
@@ -100,7 +126,7 @@ void GameplayScreen::update(uint64_t delta)
         m_game->setScreen(&(m_game->midstageScreen));
     }
 
-    if( m_sequence.size() == 17 )
+    if( m_sequence.size() == 17 || m_player->dead )
     {
         stg->state = 1;
         m_game->setScreen(stg);

@@ -62,6 +62,12 @@ void Stage::render()
     {
         auto r = go->rect;
         go->texture.draw(r.x(), r.y());
+        for( int i = 0; i < go->pos_buffer.size(); i++ )
+        {
+            auto v = go->pos_buffer[i];
+            go->texture.draw(v.x(), v.y(), float(i) * 0.04f);
+        }
+
         //aether::graphics::Color c(255, 0, 0);
         //aether::graphics::draw_rectangle(r.x1(), r.y1(), r.x2(), r.y2(), c);
         if( go->faction == Faction::Enemy )

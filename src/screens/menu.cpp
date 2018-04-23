@@ -43,5 +43,6 @@ void MenuScreen::update(uint64_t delta)
     if( aether::core::is_key_down(aether::core::KeyCode::X) )
     {
         m_game->setScreen(&(m_game->midstageScreen));
+        m_game->assets.beep.play();
     }
 }

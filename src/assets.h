@@ -13,6 +13,8 @@ public:
         drake_blue.load("media/drake_blue.png");
         drake_green.load("media/drake_green.png");
         drake_red.load("media/drake_red.png");
+        drake_gold.load("media/drake_gold.png");
+        planet.load("media/planet.png");
 
         enemy_blue.load("media/enemy_blue.png");
         enemy_green.load("media/enemy_green.png");
@@ -37,6 +39,8 @@ public:
         hurt.load("media/hurt.wav");
         heal.load("media/heal.wav");
         overload.load("media/overload.wav");
+        beep.load("media/beep.wav");
+
     }
 
 
@@ -45,6 +49,8 @@ public:
         drake_blue.destroy();
         drake_green.destroy();
         drake_red.destroy();
+        drake_gold.destroy();
+        planet.destroy();
 
         enemy_blue.destroy();
         enemy_green.destroy();
@@ -69,12 +75,15 @@ public:
         hurt.destroy();
         heal.destroy();
         overload.destroy();
+        beep.destroy();
     }
 
 
     aether::graphics::Texture drake_blue;
     aether::graphics::Texture drake_green;
     aether::graphics::Texture drake_red;
+    aether::graphics::Texture drake_gold;
+    aether::graphics::Texture planet;
 
     aether::graphics::Texture enemy_green;
     aether::graphics::Texture enemy_blue;
@@ -99,5 +108,6 @@ public:
     aether::audio::Sample hurt;
     aether::audio::Sample heal;
     aether::audio::Sample overload;
+    aether::audio::Sample beep;
 
 };

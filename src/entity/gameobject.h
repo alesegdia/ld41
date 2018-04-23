@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <aether/graphics/texture.h>
 #include <aether/math/vec.h>
+#include <deque>
 
 enum class Faction : uint8_t
 {
@@ -54,4 +55,5 @@ public:
     aether::math::Vec2f actual_speed = aether::math::Vec2f(0, 0);
     aether::math::Vec2f base_speed = aether::math::Vec2f(1, 1);
     aether::math::Vec2f input_axis = aether::math::Vec2f(0, 0);
+    std::deque<aether::math::Vec2f> pos_buffer;
 };
