@@ -29,12 +29,12 @@ public:
         SHOOT_RATE = 0.3 * 10e6;
         WAVE_RATE = 4 * 10e6;
         MAX_GAUGE = 5;
-        INITIAL_STARS = 1;
+        INITIAL_STARS = 3;
         PLAYER_X_SPEED = 400;
         PLAYER_Y_SPEED = 200;
         BULLET_SPEED = 1000;
         ENEMY_SPEED = 40;
-        ENEMY_HP = 8;
+        ENEMY_HP = 4;
     }
 
 
@@ -42,13 +42,13 @@ public:
     {
         SHOOT_RATE = 0.3 * 10e6;
         WAVE_RATE = 4 * 10e6;
-        MAX_GAUGE = 5;
-        INITIAL_STARS = 1;
+        MAX_GAUGE = 4;
+        INITIAL_STARS = 4;
         PLAYER_X_SPEED = 400;
         PLAYER_Y_SPEED = 200;
         BULLET_SPEED = 1000;
-        ENEMY_SPEED = 40;
-        ENEMY_HP = 8;
+        ENEMY_SPEED = 50;
+        ENEMY_HP = 6;
     }
 
     static void Level3()
@@ -60,7 +60,7 @@ public:
         PLAYER_X_SPEED = 400;
         PLAYER_Y_SPEED = 200;
         BULLET_SPEED = 1000;
-        ENEMY_SPEED = 40;
+        ENEMY_SPEED = 50;
         ENEMY_HP = 8;
     }
 

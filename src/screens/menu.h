@@ -16,5 +16,6 @@ public:
 
 private:
     LD41* m_game;
+    float m_textPos = 50;
 
 };

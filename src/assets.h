@@ -27,6 +27,7 @@ public:
         star_red.load("media/star_red.png");
         star_green.load("media/star_green.png");
         star_blue.load("media/star_blue.png");
+        splash.load("media/splash.png");
 
         font.load("media/perfectdos.ttf", 20);
         fontMid.load("media/perfectdos.ttf", 40);
@@ -63,6 +64,7 @@ public:
         star_blue.destroy();
         star_green.destroy();
         star_red.destroy();
+        splash.destroy();
 
         font.destroy();
         fontMid.destroy();
@@ -96,6 +98,8 @@ public:
     aether::graphics::Texture star_green;
     aether::graphics::Texture star_blue;
     aether::graphics::Texture star_red;
+
+    aether::graphics::Texture splash;
 
     aether::graphics::Font font;
     aether::graphics::Font fontMid;

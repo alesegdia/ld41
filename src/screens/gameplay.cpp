@@ -48,7 +48,7 @@ void GameplayScreen::render()
         c.r = rand() % 255;
         c.g = rand() % 255;
         c.b = rand() % 255;
-        m_game->assets.font.print("PRESS X TO OVERLOAD!!", 550, 550, aether::graphics::Color(255, 255, 255));
+        m_game->assets.font.print("PRESS Z TO OVERLOAD!!", 550, 550, aether::graphics::Color(255, 255, 255));
     }
     else
     {
