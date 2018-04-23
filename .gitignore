@@ -1,4 +1,6 @@
 *.txt.user
+*.zip
 bin
 winbuild
+linbuild
 build

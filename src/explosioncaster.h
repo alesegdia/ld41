@@ -35,25 +35,30 @@ struct Explosion
 
 struct Debris
 {
-    int size = 10;
+    float size = 10;
     float x, y;
     int speed = 30;
+    float alpha = 255;
+
     Debris(int s, float xx, float yy)
     {
         size = s;
         x = xx;
         y = yy;
         speed = 10 + rand() % 30;
-    };
+    }
 
     void update()
     {
         x -= speed;
+        size += 1;
+        alpha -= 10;
+        if( alpha < 0 ) alpha = 0;
     }
 
     void render()
     {
-        aether::graphics::draw_filled_circle(x, y, size, aether::graphics::Color(255, 255, 255));
+        aether::graphics::draw_filled_circle_alpha(x, y, size, aether::graphics::Color(255, 255, 255), alpha);
     }
 };
 
