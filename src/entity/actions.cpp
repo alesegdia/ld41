@@ -48,7 +48,7 @@ void actions_init(Assets *assets_, EntityFactory* factory_)
 
 void sys_move(GameObject::Ptr go, uint64_t delta)
 {
-    float delta_float = (double)delta / (double)10e6;
+    float delta_float = (double)delta * double(10e-8);
     aether::math::Vec2f distance_to_move = go->input_axis * go->base_speed * delta_float;
     go->rect.move(distance_to_move);
     if( go->rect.x() < -100 || go->rect.x() > 1200 )

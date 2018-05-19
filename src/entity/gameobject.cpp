@@ -1,4 +1,5 @@
 #include "gameobject.h"
+#include <cassert>
 
 Effectiveness getEffectiveness(Element e1, Element e2)
 {
@@ -36,4 +37,5 @@ Effectiveness getEffectiveness(Element e1, Element e2)
             return Effectiveness::Strong;
         }
     }
+	assert(false);
 }
