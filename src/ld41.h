@@ -1,4 +1,4 @@
-#include <aether/core/application.h>
+#include <aether/aether.h>
 
 #include "screens/gameplay.h"
 #include "screens/menu.h"
